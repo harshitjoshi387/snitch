@@ -4,25 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"tsx watch server.ts"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
-    "@types/mongoose": "^5.11.96",
-    "cookie-parser": "^1.4.7",
-    "D": "^1.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.6.1",
-    "tsx": "^4.21.0",
-    "typescript": "^6.0.3"
-  },
-  "devDependencies": {
-    "@types/node": "^25.6.0"
+    "mongoose": "^9.6.1"
   }
 }
