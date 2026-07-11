@@ -4,11 +4,10 @@ import { registerAPI } from "@/services/auth.api"
 
 export function useAuth() {
     const dispatch = useDispatch()   
-
-    const handleRegister = async (name, email, password, contact) => {
+    const handleRegister = async (name, email, password, contact,isseller=false) => {
         try {
             dispatch(setLoading(true))
-            const data = await registerAPI(name, email, password, contact)
+            const data = await registerAPI(name, email, password, contact,isseller)
             dispatch(setUser(data.user))
         } catch (error) {
             dispatch(setError(error.message ?? "Registration failed"))
@@ -17,4 +16,5 @@ export function useAuth() {
         }
     }
 
-    return { handleRegister }   
+    return { handleRegister }  
+}
