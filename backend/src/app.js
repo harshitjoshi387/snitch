@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 import "dotenv/config";
 
 const app = express();
@@ -8,9 +9,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-app.use(cors())
+app.use(cors({
+  origin: true, // This reflects the request origin, allowing any origin to work with credentials
+  credentials: true
+}));
+
+import authRoutes from "./routes/auth.routes.js";
 
 // ── Routes ─────────────────────────────────────────────────
+app.use("/api/auth", authRoutes);
+
 app.get("/", (_req, res) => {
   res.json({ message: "🚀 Server is up and running" });
 });

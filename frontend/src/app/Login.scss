@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
-/* Apply box-sizing globally for the register container */
-.register-container {
+/* Apply box-sizing globally for the login container */
+.login-container {
   box-sizing: border-box;
   *, *:before, *:after {
     box-sizing: inherit;
@@ -17,11 +17,11 @@
 }
 
 /* Left side - Image Banner (for E-commerce feel) */
-.register-banner {
+.login-banner {
   flex: 1;
   display: none; /* Hidden on mobile */
   position: relative;
-  background-image: url('/fashion_bg.png');
+  background-image: url('/fashion_bg.png'); /* Reusing same background image if it exists */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -87,7 +87,7 @@
 }
 
 /* Right side - Form Area */
-.register-form-section {
+.login-form-section {
   flex: 1;
   display: flex;
   align-items: center;
@@ -101,7 +101,7 @@
   }
 }
 
-.register-card {
+.login-card {
   width: 100%;
   max-width: 440px;
   padding: 20px;
@@ -147,15 +147,6 @@ form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.name-row {
-  display: flex;
-  gap: 15px;
-  
-  .form-group {
-    flex: 1;
-  }
 }
 
 .form-group {
@@ -209,7 +200,7 @@ form {
   }
 }
 
-.register-btn {
+.login-btn {
   width: 100%;
   padding: 18px;
   background: #fff;
@@ -252,12 +243,24 @@ form {
       color: #fff;
     }
   }
-   &:active {
+  
+  &:active {
     transform: scale(0.98);
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    &:hover::before {
+      left: -100%;
+    }
+    &:hover span {
+      color: #000;
+    }
   }
 }
 
-.login-link {
+.register-link {
   text-align: center;
   margin-top: 30px;
   color: #888;

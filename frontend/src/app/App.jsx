@@ -1,10 +1,9 @@
-import Register from './Register'
+import { RouterProvider, Outlet } from 'react-router'
+import { router } from './app.routes'
 
 const App = () => {
   return (
-    <>
-      <Register />
-    </>
+    <RouterProvider router={router}/>
   )
 }
 

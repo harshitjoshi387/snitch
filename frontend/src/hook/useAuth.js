@@ -1,6 +1,6 @@
 import { setError, setLoading, setUser } from "@/features/auth/state/auth.slice"
 import { useDispatch } from "react-redux"
-import { registerAPI } from "@/services/auth.api"
+import { registerAPI, loginAPI } from "@/services/auth.api"
 
 export function useAuth() {
     const dispatch = useDispatch()   
@@ -16,5 +16,22 @@ export function useAuth() {
         }
     }
 
-    return { handleRegister }  
+    const handleLogin = async (email, password) => {
+        try {
+            dispatch(setError(null)); // Clear previous errors
+            dispatch(setLoading(true));
+            const data = await loginAPI(email, password)
+            dispatch(setUser(data.user))
+            // Save token if needed, or rely on HTTP-only cookies
+            if (data.token) {
+                localStorage.setItem("token", data.token);
+            }
+        } catch (error) {
+            dispatch(setError(error.message ?? error ?? "Login failed"))
+        } finally {
+            dispatch(setLoading(false))
+        }
+    }
+
+    return { handleRegister, handleLogin }  
 }
