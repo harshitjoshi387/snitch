@@ -3,7 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import "dotenv/config";
 import passport from "passport"
-import{Strategy}from "passport-google-oauth20"
+import{Strategy as googleStrategy}from "passport-google-oauth20"
 
 const app = express();
 
