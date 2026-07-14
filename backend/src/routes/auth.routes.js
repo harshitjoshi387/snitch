@@ -11,19 +11,18 @@ router.post('/register', register);
 router.post('/login', login);
 router.get('/me', getMe);
 
-// ── Google OAuth ───────────────────────────────────────────
-// Step 1: Redirect user to Google consent screen
+
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"], session: false })
 );
 
-// Step 2: Google redirects back here with user data
+
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false, failureRedirect: "/login" }),
   (req, res) => {
-    // Generate JWT for the authenticated user
+    
     const token = jwt.sign(
       { id: req.user._id, role: req.user.role },
       process.env.JWT_SECRET || "supersecret",
