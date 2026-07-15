@@ -7,6 +7,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import config from "./config/config.js";
 import UserModel from "./models/user.model.js";
 import jwt from "jsonwebtoken";
+import{productRouter} from "./routes/product.routes.js"
 
 const app = express();
 
@@ -64,6 +65,7 @@ import authRoutes from "./routes/auth.routes.js";
 
 // ── Routes ─────────────────────────────────────────────────
 app.use("/api/auth", authRoutes);
+app.use("/api/product",productRouter)
 
 app.get("/", (_req, res) => {
   res.json({ message: "🚀 Server is up and running" });
