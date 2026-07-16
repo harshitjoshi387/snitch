@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router'
-import Register from './Register'
-import Login from './Login'
+import Register from '../features/auth/pages/Register'
+import Login from '../features/auth/pages/Login'
 import GoogleAuthSuccess from './GoogleAuthSuccess'
 
 export const router = createBrowserRouter([
