@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { setUser, setLoading, setError } from '@/features/auth/state/auth.slice';
+import { setUser, setLoading, setError } from '@/features/products/states/auth.slice';
 import axios from 'axios';
 
 const GoogleAuthSuccess = () => {
