@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../../../app/Register.scss';
-import { useAuth } from '@/features/auth/hook/useAuth';
+import '@/assets/styles/Register.scss';
+import { useAuth } from '@/hooks/useAuth';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +24,6 @@ const Register = () => {
     const fullName = `${formData.firstName} ${formData.lastName}`;
     await handleRegister(fullName, formData.email, formData.password, '', false);
     alert("Registration successful! You can now login.");
-    // Optionally redirect to login page here using useNavigate
   };
 
   return (

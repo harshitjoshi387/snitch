@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import '../../../app/Register.scss'
+import React, { useState } from 'react';
+import '@/assets/styles/Register.scss';
 
 const CreateProduct = () => {
   const [formData, setFormData] = useState({
@@ -7,27 +7,27 @@ const CreateProduct = () => {
     description: '',
     priceAmount: '',
     priceCurrency: 'USD',
-  })
-  const [images, setImages] = useState([])
+  });
+  const [images, setImages] = useState([]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files || [])
+    const files = Array.from(e.target.files || []);
     const nextImages = files.slice(0, 7).map((file) => ({
       name: file.name,
       preview: URL.createObjectURL(file),
-    }))
-    setImages(nextImages)
-  }
+    }));
+    setImages(nextImages);
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Product draft ready', { ...formData, images })
-  }
+    e.preventDefault();
+    console.log('Product draft ready', { ...formData, images });
+  };
 
   return (
     <div className="register-container">
@@ -133,7 +133,7 @@ const CreateProduct = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateProduct
+export default CreateProduct;

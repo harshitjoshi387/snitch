@@ -1,44 +1,27 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { setUser, setLoading, setError } from '@/features/products/states/auth.slice';
-import axios from 'axios';
+import { useAuth } from '@/hooks/useAuth';
 
 const GoogleAuthSuccess = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { handleGoogleAuthSuccess } = useAuth();
 
   useEffect(() => {
     const token = searchParams.get('token');
 
     if (token) {
-      // Store the token
-      localStorage.setItem('token', token);
-
-      // Fetch user profile with the token
-      const fetchUser = async () => {
-        try {
-          dispatch(setLoading(true));
-          const response = await axios.get('http://localhost:3000/api/auth/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          dispatch(setUser(response.data.user));
+      handleGoogleAuthSuccess(token)
+        .then(() => {
           navigate('/');
-        } catch (error) {
-          dispatch(setError('Google login failed. Please try again.'));
+        })
+        .catch(() => {
           navigate('/login');
-        } finally {
-          dispatch(setLoading(false));
-        }
-      };
-
-      fetchUser();
+        });
     } else {
-      dispatch(setError('Google login failed. No token received.'));
       navigate('/login');
     }
-  }, [searchParams, navigate, dispatch]);
+  }, [searchParams, navigate, handleGoogleAuthSuccess]);
 
   return (
     <div style={{
