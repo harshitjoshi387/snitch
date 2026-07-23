@@ -1,13 +1,14 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import {useProduct} from '@/hooks/useProduct'
+import { useProduct } from '@/hooks/useProduct'
 const Dashboard = () => {
-  const{handleSellerProduct }=useProduct()
-  const products= useSelector()
-  useEffect(()=>{
+  const { handleSellerProduct } = useProduct()
+  const products = useSelector(state => state.product.SellerProducts)
+  console.log(products)
+  useEffect(() => {
     handleSellerProduct();
-  },[])
-  
+  }, [])
+
   return (
     <div>Dashboard</div>
   )
