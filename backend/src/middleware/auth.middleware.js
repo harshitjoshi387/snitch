@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-import {config} from "../config/config.js"
+import config from "../config/config.js"
 import UserModel from "../models/user.model.js";
 
 export const authenticateSeller =async (req,res,next)=>{
