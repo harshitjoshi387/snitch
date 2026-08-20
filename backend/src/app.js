@@ -7,7 +7,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import config from "./config/config.js";
 import UserModel from "./models/user.model.js";
 import jwt from "jsonwebtoken";
-import{productRouter} from "./routes/product.routes.js"
+import productRouter from "./routes/product.routes.js"
 
 const app = express();
 
@@ -22,44 +22,44 @@ app.use(cors({
 app.use(passport.initialize());
 
 // ── Google OAuth Strategy ─────────────────────────────────
-passport.use(new GoogleStrategy({
-  clientID: config.GOOGLE_CLIENT_ID,
-  clientSecret: config.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/api/auth/google/callback"
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-    // Check if user already exists with this Google ID
-    let user = await UserModel.findOne({ googleId: profile.id });
+// passport.use(new GoogleStrategy({
+//   clientID: config.GOOGLE_CLIENT_ID,
+//   clientSecret: config.GOOGLE_CLIENT_SECRET,
+//   callbackURL: "/api/auth/google/callback"
+// }, async (accessToken, refreshToken, profile, done) => {
+//   try {
+//     // Check if user already exists with this Google ID
+//     let user = await UserModel.findOne({ googleId: profile.id });
 
-    if (!user) {
-      // Check if a user with the same email already exists (linked by email)
-      const email = profile.emails?.[0]?.value;
-      if (email) {
-        user = await UserModel.findOne({ email });
-        if (user) {
-          // Link google account to existing user
-          user.googleId = profile.id;
-          user.avatar = profile.photos?.[0]?.value || user.avatar;
-          await user.save();
-        }
-      }
+//     if (!user) {
+//       // Check if a user with the same email already exists (linked by email)
+//       const email = profile.emails?.[0]?.value;
+//       if (email) {
+//         user = await UserModel.findOne({ email });
+//         if (user) {
+//           // Link google account to existing user
+//           user.googleId = profile.id;
+//           user.avatar = profile.photos?.[0]?.value || user.avatar;
+//           await user.save();
+//         }
+//       }
 
-      // If still no user found, create a new one
-      if (!user) {
-        user = await UserModel.create({
-          googleId: profile.id,
-          email: email,
-          fullname: profile.displayName,
-          avatar: profile.photos?.[0]?.value
-        });
-      }
-    }
+//       // If still no user found, create a new one
+//       if (!user) {
+//         user = await UserModel.create({
+//           googleId: profile.id,
+//           email: email,
+//           fullname: profile.displayName,
+//           avatar: profile.photos?.[0]?.value
+//         });
+//       }
+//     }
 
-    return done(null, user);
-  } catch (error) {
-    return done(error, null);
-  }
-}));
+//     return done(null, user);
+//   } catch (error) {
+//     return done(error, null);
+//   }
+// }));
 
 import authRoutes from "./routes/auth.routes.js";
 
