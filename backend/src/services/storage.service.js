@@ -1,16 +1,18 @@
-import ImageKit from "@imagekit/nodejs";
-import {config} from "../config/config.js"
+import ImageKit, { toFile } from "@imagekit/nodejs";
+import config from "../config/config.js";
 
 const client = new ImageKit({
+  publicKey: config.IMAGEKIT_PUBLIC_KEY,
   privateKey: config.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: config.IMAGEKIT_URL_ENDPOINT
 });
 
-export async function uploadFile({buffer,fileName,folder="snitch"}) {
-  const result=await client.file.upload({
-    file:await ImageKit.tofile(buffer),
+export async function uploadFile({buffer, fileName, folder="snitch"}) {
+  const fileData = await toFile(buffer);
+  const result = await client.files.upload({
+    file: fileData,
     fileName,
     folder
-  })
-  return result
-  
+  });
+  return result;
 }

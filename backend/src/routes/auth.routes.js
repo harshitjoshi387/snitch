@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 const router = Router();
 
 // ── Local Auth ─────────────────────────────────────────────
-router.post('/register', register);
+router.post('/register', validRegisterUser, register);
 router.post('/login', login);
 router.get('/me', getMe);
 

@@ -8,15 +8,18 @@ if(!process.env.MONGO_URI){
 //   throw new Error("GOOGLE_CLIENT_ID is not defined in environment variables")
 // }
 if(!process.env.IMAGEKIT_PRIVATE_KEY){
-  throw new error("imgaekit private key is not define")
+  throw new Error("IMAGEKIT_PRIVATE_KEY is not defined in environment variables")
 }
 
 export default {
   port: process.env.PORT || 3000,
   mongoUri: process.env.MONGO_URI,
-  jwtSecret: process.env.JWT_SECRET,
+  jwtSecret: process.env.JWT_SECRET || "supersecret",
+  JWT_SECRET: process.env.JWT_SECRET || "supersecret",
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
-  IMAGEKIT_PRIVATE_KEY:process.env.IMAGEKIT_PRIVATE_KEY
+  IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
+  IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
+  IMAGEKIT_URL_ENDPOINT: process.env.IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/snitch"
 };

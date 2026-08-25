@@ -14,17 +14,17 @@ const upload = multer({
 })
 
 /**
- * @route post/api/products
+ * @route POST /api/product
  * @description create a new product
  * @access private (Seller Only)
  */
-router.post("/product", authenticateSeller, createProductValidator, upload.array("images", 7), createProduct)
+router.post("/", authenticateSeller, upload.array("images", 7), createProductValidator, createProduct)
 
 /**
- * @route Get/api/product/seller
+ * @route GET /api/product/seller
  * @description Get all the products of the authenticated seller
- * @access private(Seller only )
+ * @access private (Seller only)
  */
-router.get("/seller", getSellerProducts)
+router.get("/seller", authenticateSeller, getSellerProducts)
 
 export default router

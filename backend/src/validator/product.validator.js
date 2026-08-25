@@ -9,13 +9,30 @@ export const createProductValidator = [
         .notEmpty().withMessage("Description is required")
         .isString().withMessage("Description must be a string"),
 
-    body("price.amount")
-        .notEmpty().withMessage("Price amount is required")
-        .isNumeric().withMessage("Price amount must be a number"),
+    body("price")
+        .custom((value) => {
+            let amt = value;
+            if (typeof value === "string") {
+                try {
+                    const parsed = JSON.parse(value);
+                    if (typeof parsed === "object" && parsed !== null) {
+                        amt = parsed.amount;
+                    }
+                } catch (_e) {
+                    amt = value;
+                }
+            } else if (typeof value === "object" && value !== null) {
+                amt = value.amount;
+            }
 
-    body("price.currency")
-        .optional()
-        .isIn(["USD", "EUR", "GBP", "JPY", "INR"]).withMessage("Invalid currency"),
+            if (amt === undefined || amt === null || amt === "") {
+                throw new Error("Price amount is required");
+            }
+            if (isNaN(Number(amt))) {
+                throw new Error("Price amount must be a number");
+            }
+            return true;
+        }),
 
     (req, res, next) => {
         const errors = validationResult(req)

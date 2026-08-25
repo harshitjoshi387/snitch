@@ -3,35 +3,40 @@ import jwt from "jsonwebtoken"
 import config from "../config/config.js"
 import UserModel from "../models/user.model.js";
 
-export const authenticateSeller =async (req,res,next)=>{
-    const token= req.cookie.token
+export const authenticateSeller = async (req, res, next) => {
+    let token = req.cookies?.token;
 
-    if(!token){
-       return  res.status(401).json({
-            message:"Unauthorised"
-        })
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+        token = req.headers.authorization.split(" ")[1];
     }
 
-    try{
-        const decoded= jwt.verify(token, config,JWT_SECRET)
-        const user =await UserModel.findbyId(decoded.id)
-        
-    if(!user){
+    if (!token) {
         return res.status(401).json({
-            message:"Unauthorised"
-        })
-    }
-    if(user.id!=="seller"){
-        return res.status(401).json({
-            message:"Unauthorised"
-        })
+            message: "Unauthorised"
+        });
     }
 
-    }
-    catch (err){
-        console.log(err)
+    try {
+        const decoded = jwt.verify(token, config.jwtSecret);
+        const user = await UserModel.findById(decoded.id);
+
+        if (!user) {
+            return res.status(401).json({
+                message: "Unauthorised"
+            });
+        }
+        if (user.role !== "seller") {
+            return res.status(401).json({
+                message: "Unauthorised"
+            });
+        }
+
+        req.user = user;
+        next();
+    } catch (err) {
+        console.log(err);
         return res.status(401).json({
-            message:"Unauthorised"
-        })
+            message: "Unauthorised"
+        });
     }
-}
+};
