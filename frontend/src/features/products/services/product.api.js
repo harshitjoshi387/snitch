@@ -14,7 +14,10 @@ export async function getSellerProduct(){
   const response =await productApiIstance.get("/seller")
   return response.data
 }
-
+export default {
+  createProduct,
+  getSellerProduct,
+};
 
 
 

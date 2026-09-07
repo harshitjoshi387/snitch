@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import productApi from '@/features/products/services/product.api';
+import { createProduct } from "@/features/products/services/product.api";
 import '@/features/auth/styles/Register.scss';
 
 const CreateProduct = () => {
@@ -58,7 +58,7 @@ const CreateProduct = () => {
         payload.append('images', file);
       });
 
-      const response = await productApi.createProduct(payload);
+      const response = await createProduct(payload);
       if (response && response.success) {
         setSuccess('Product created successfully!');
         setFormData({ title: '', description: '', priceAmount: '', priceCurrency: 'INR' });
