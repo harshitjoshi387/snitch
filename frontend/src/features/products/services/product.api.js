@@ -1,18 +1,20 @@
-import apiClient from '@/app/apiClient';
+import axios from "axios"
 
-export async function createProduct(formData) {
-  const response = await apiClient.post('/product', formData);
-  return response.data;
+const productApiIstance = axios.create({
+  baseURL:"/api/products",
+  withCredentials:true
+})
+
+export async function createProduct(formData){
+  const response =await productApiIstance.post("/",formData)
+  return response.data
 }
 
-export async function getSellerProduct() {
-  const response = await apiClient.get('/product/seller');
-  return response.data;
+export async function getSellerProduct(){
+  const response =await productApiIstance.get("/seller")
+  return response.data
 }
 
-const productApi = {
-  createProduct,
-  getSellerProduct,
-};
 
-export default productApi;
+
+
