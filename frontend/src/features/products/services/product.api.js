@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from '@/app/apiClient';
 
 export async function createProduct(formData) {
   const response = await apiClient.post('/product', formData);
@@ -10,9 +10,9 @@ export async function getSellerProduct() {
   return response.data;
 }
 
-const productService = {
+const productApi = {
   createProduct,
   getSellerProduct,
 };
 
-export default productService;
+export default productApi;

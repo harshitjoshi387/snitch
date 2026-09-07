@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '@/assets/styles/Register.scss';
-import { useAuth } from '@/hooks/useAuth';
+import '@/features/auth/styles/Register.scss';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 
 const Register = () => {
   const [formData, setFormData] = useState({

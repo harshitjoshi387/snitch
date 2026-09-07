@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { setError, setLoading, setUser } from '@/store/authSlice';
-import authService from '@/services/authService';
+import { setError, setLoading, setUser } from '@/features/auth/store/authSlice';
+import authApi from '@/features/auth/services/auth.api';
 
 export function useAuth() {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export function useAuth() {
   const handleRegister = async (name, email, password, contact, isSeller = false) => {
     try {
       dispatch(setLoading(true));
-      const data = await authService.registerAPI(name, email, password, contact, isSeller);
+      const data = await authApi.registerAPI(name, email, password, contact, isSeller);
       dispatch(setUser(data.user));
       return data;
     } catch (error) {
@@ -23,7 +23,7 @@ export function useAuth() {
     try {
       dispatch(setError(null));
       dispatch(setLoading(true));
-      const data = await authService.loginAPI(email, password);
+      const data = await authApi.loginAPI(email, password);
       dispatch(setUser(data.user));
       if (data.token) {
         localStorage.setItem('token', data.token);
@@ -41,7 +41,7 @@ export function useAuth() {
     try {
       dispatch(setLoading(true));
       localStorage.setItem('token', token);
-      const data = await authService.getCurrentUserAPI(token);
+      const data = await authApi.getCurrentUserAPI(token);
       dispatch(setUser(data.user));
       return data;
     } catch (error) {

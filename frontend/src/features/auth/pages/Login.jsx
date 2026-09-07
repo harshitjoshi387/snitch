@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '@/assets/styles/Login.scss';
-import { useAuth } from '@/hooks/useAuth';
+import '@/features/auth/styles/Login.scss';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 

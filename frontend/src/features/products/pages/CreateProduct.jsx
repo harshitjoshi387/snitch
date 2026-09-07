@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import productService from '@/services/productService';
-import '@/assets/styles/Register.scss';
+import productApi from '@/features/products/services/product.api';
+import '@/features/auth/styles/Register.scss';
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const CreateProduct = () => {
         payload.append('images', file);
       });
 
-      const response = await productService.createProduct(payload);
+      const response = await productApi.createProduct(payload);
       if (response && response.success) {
         setSuccess('Product created successfully!');
         setFormData({ title: '', description: '', priceAmount: '', priceCurrency: 'INR' });
@@ -87,7 +87,7 @@ const CreateProduct = () => {
           <p>Menswear</p>
         </div>
         <div className="quote-overlay">
-          <p>“Style is a way to say who you are without having to speak.”</p>
+          <p>"Style is a way to say who you are without having to speak."</p>
           <div className="author">— Premium Collection</div>
         </div>
       </div>

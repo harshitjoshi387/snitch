@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from '@/app/apiClient';
 
 export async function registerAPI(fullname, email, password, contact, isSeller) {
   try {
@@ -37,10 +37,10 @@ export async function getCurrentUserAPI(token) {
   }
 }
 
-const authService = {
+const authApi = {
   registerAPI,
   loginAPI,
   getCurrentUserAPI,
 };
 
-export default authService;
+export default authApi;
