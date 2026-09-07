@@ -14,7 +14,8 @@ export async function createProduct(req, res) {
         const images = await Promise.all(fileList.map(async (file) => {
             const uploadRes = await uploadFile({
                 buffer: file.buffer,
-                fileName: file.originalname
+                fileName: file.originalname,
+                mimeType: file.mimetype
             });
             return {
                 url: uploadRes.url,
