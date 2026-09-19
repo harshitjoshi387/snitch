@@ -1,6 +1,7 @@
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
+import cookieParser from "cookie-parser";
 
 export const register = async (req, res) => {
     const { email, contact, password, fullname, isSeller } = req.body;
@@ -43,10 +44,16 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password" });
         }
         const token = jwt.sign(
-            { id: user._id, role: user.role }, 
-            config.jwtSecret, 
+            { id: user._id, role: user.role },
+            config.jwtSecret,
             { expiresIn: "1d" }
         );
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production", // dev mein false, prod mein true
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000 // 1 din
+        });
         const userObj = user.toObject();
         delete userObj.password;
         return res.status(200).json({ message: "Login successful", user: userObj, token });
