@@ -78,18 +78,17 @@ const Dashboard = () => {
           <div className="seller-dashboard__grid">
             {products.map((product) => {
               const image = getImage(product);
+              const productId = product._id || product.id;
 
               return (
                 <article
                   className="seller-product-card"
-                  key={product._id || product.id}
+                  key={productId}
+                  onClick={() => navigate(`/product/${productId}`)}
                 >
                   <div className="seller-product-card__image">
                     {image ? (
-                      <img
-                        src={image}
-                        alt={product.title || "Product"}
-                      />
+                      <img src={image} alt={product.title || "Product"} />
                     ) : (
                       <div>No image available</div>
                     )}
@@ -111,8 +110,23 @@ const Dashboard = () => {
                     </div>
 
                     <div className="seller-product-card__actions">
-                      <button type="button">Edit</button>
-                      <button type="button">Delete</button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/product/edit/${productId}`);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </article>

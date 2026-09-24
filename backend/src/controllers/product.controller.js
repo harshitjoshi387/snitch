@@ -84,3 +84,18 @@ export async function getSellerProducts(req, res) {
         return res.status(500).json({ message: "Server error" });
     }
 }
+
+
+export  async function getProductDetail (req, res)  {
+  try {
+    const { id } = req.params;
+    const product = await productModel.findById(id); 
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};

@@ -4,6 +4,7 @@ import Login from '@/features/auth/pages/Login';
 import GoogleAuthSuccess from '@/features/auth/pages/GoogleAuthSuccess';
 import CreateProduct from '@/features/products/pages/CreateProduct';
 import Dashboard from '@/features/products/pages/Dashboard';
+import ProductDetail from '../features/products/pages/ProductDetail';
 
 export const router = createBrowserRouter([
   {
@@ -29,5 +30,9 @@ export const router = createBrowserRouter([
   {
     path: '/auth/google/success',
     element: <GoogleAuthSuccess />
+  },
+  {
+    path:"/product/:productId",
+    element:<ProductDetail/>
   }
 ]);
