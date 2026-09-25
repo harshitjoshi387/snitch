@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useProduct } from "@/features/products/hooks/useProduct";
-import "@/features/auth/styles/Dashboard.scss";
+import "@/features/products/styles/Dashboard.scss";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -35,107 +35,117 @@ const Dashboard = () => {
   };
 
   return (
-    <main className="seller-dashboard">
-      <section className="seller-dashboard__header">
-        <div>
-          <p>SELLER PANEL</p>
-          <h1>My Listed Products</h1>
-          <span>Manage your products and inventory.</span>
-        </div>
+    <div className="dash-page">
+      {/* Top promo bar */}
+      <div className="promo-bar">
+        FREE SHIPPING ON ALL ORDERS OVER $50 &nbsp;•&nbsp; USE CODE: <span>FRESH25</span> FOR 15% OFF
+      </div>
 
-        <button type="button" onClick={() => navigate("/product")}>
+      {/* Navbar */}
+      <nav className="dash-navbar">
+        <div className="logo"><span>Snitch</span></div>
+        <div className="nav-links">
+          <a href="/men">MEN</a>
+          <a href="/women">WOMEN</a>
+          <a href="/sneakers">SNEAKERS</a>
+          <a href="/accessories">ACCESSORIES</a>
+        </div>
+        <button className="add-btn" onClick={() => navigate("/product")}>
           + Add Product
         </button>
-      </section>
+      </nav>
 
-      <section className="seller-dashboard__summary">
-        <div>
-          <span>Total Products</span>
-          <strong>{products.length}</strong>
-        </div>
+      {/* Hero header */}
+      <header className="dash-hero">
+        <span className="eyebrow">SELLER PANEL</span>
+        <h1>My Listed Products</h1>
+        <p>Manage your products and inventory, all in one place.</p>
+      </header>
 
-        <div>
-          <span>Available Products</span>
-          <strong>{products.length}</strong>
-        </div>
-      </section>
-
-      <section className="seller-dashboard__products">
-        <div className="seller-dashboard__title-row">
-          <h2>Listed Products</h2>
-          <span>{products.length} products</span>
-        </div>
-
-        {products.length === 0 ? (
-          <div className="seller-dashboard__empty">
-            <h3>No products listed yet</h3>
-            <p>Add your first product to show it here.</p>
-            <button type="button" onClick={() => navigate("/product")}>
-              Add Product
-            </button>
+      <main className="dash-main">
+        {/* Stats */}
+        <section className="dash-stats">
+          <div className="stat-card">
+            <span>Total Products</span>
+            <strong>{products.length}</strong>
           </div>
-        ) : (
-          <div className="seller-dashboard__grid">
-            {products.map((product) => {
-              const image = getImage(product);
-              const productId = product._id || product.id;
+          <div className="stat-card">
+            <span>Available Products</span>
+            <strong>{products.length}</strong>
+          </div>
+        </section>
 
-              return (
-                <article
-                  className="seller-product-card"
-                  key={productId}
-                  onClick={() => navigate(`/product/${productId}`)}
-                >
-                  <div className="seller-product-card__image">
-                    {image ? (
-                      <img src={image} alt={product.title || "Product"} />
-                    ) : (
-                      <div>No image available</div>
-                    )}
-                  </div>
+        {/* Products */}
+        <section className="dash-products">
+          <div className="section-head">
+            <h2>Listed Products</h2>
+            <span>{products.length} products</span>
+          </div>
 
-                  <div className="seller-product-card__content">
-                    <h3>{product.title || "Untitled Product"}</h3>
+          {products.length === 0 ? (
+            <div className="dash-empty">
+              <h3>No products listed yet</h3>
+              <p>Add your first product to show it here.</p>
+              <button onClick={() => navigate("/product")}>Add Product</button>
+            </div>
+          ) : (
+            <div className="dash-grid">
+              {products.map((product) => {
+                const image = getImage(product);
+                const productId = product._id || product.id;
 
-                    <p>
-                      {product.description || "No description available."}
-                    </p>
+                return (
+                  <article
+                    className="dash-card"
+                    key={productId}
+                    onClick={() => navigate(`/product/${productId}`)}
+                  >
+                    <div className="dash-card__image">
+                      {image ? (
+                        <img src={image} alt={product.title || "Product"} />
+                      ) : (
+                        <div className="no-image">No image</div>
+                      )}
 
-                    <div className="seller-product-card__bottom">
+                      <span className="badge">Listed</span>
+
+                      <div className="dash-card__overlay">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/product/edit/${productId}`);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="danger"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="dash-card__content">
+                      <h3>{product.title || "Untitled Product"}</h3>
+                      <p>{product.description || "No description available."}</p>
                       <strong>
                         ₹{Number(getPrice(product)).toLocaleString("en-IN")}
                       </strong>
-
-                      <span>Listed</span>
                     </div>
-
-                    <div className="seller-product-card__actions">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/product/edit/${productId}`);
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        )}
-      </section>
-    </main>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      </main>
+    </div>
   );
 };
 

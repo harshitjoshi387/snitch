@@ -85,7 +85,17 @@ export async function getSellerProducts(req, res) {
     }
 }
 
-
+export async function getAllProducts(req, res) {
+  try {
+    const products = await productModel.find({}).populate("seller", "name email");
+    res.status(200).json({
+      message: "Products fetched successfully",
+      products,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
 export  async function getProductDetail (req, res)  {
   try {
     const { id } = req.params;

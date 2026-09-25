@@ -5,11 +5,12 @@ import GoogleAuthSuccess from '@/features/auth/pages/GoogleAuthSuccess';
 import CreateProduct from '@/features/products/pages/CreateProduct';
 import Dashboard from '@/features/products/pages/Dashboard';
 import ProductDetail from '../features/products/pages/ProductDetail';
+import Home from '../features/products/pages/Home';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Register />
+    element: <Home />
   },
   {
     path: '/register',

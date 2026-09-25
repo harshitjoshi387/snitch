@@ -19,9 +19,14 @@ export async function getProductById(productId) {
   const response = await productApiInstance.get(`/detail/${productId}`);
   return response.data;
 }
+export async function getAllProducts() {
+  const response = await productApiInstance.get("/all");
+  return response.data;
+}
 
 export default {
   createProduct,
   getSellerProduct,
   getProductById,
+  getAllProducts,
 };
